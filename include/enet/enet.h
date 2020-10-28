@@ -12,9 +12,9 @@ extern "C"
 
 #include <stdlib.h>
 
-#ifdef _STUB
+#if defined(_STUB)
 #include "enet/stub.h"
-#elseifdef _WIN32
+#elif defined(_WIN32)
 #include "enet/win32.h"
 #else
 #include "enet/unix.h"
@@ -90,8 +90,14 @@ typedef enum _ENetSocketShutdown
  */
 typedef struct _ENetAddress
 {
+#ifndef _STUB
    enet_uint32 host;
    enet_uint16 port;
+#else
+   uint8_t host[16];
+   uint16_t port;
+   uint8_t wildcard;
+#endif
 } ENetAddress;
 
 /**
@@ -526,6 +532,10 @@ ENET_API int        enet_socketset_select (ENetSocket, ENetSocketSet *, ENetSock
     @returns the address of the given hostName in address on success
 */
 ENET_API int enet_address_set_host_ip (ENetAddress * address, const char * hostName);
+
+#ifdef _STUB
+ENET_API void enet_address_set_ip(ENetAddress *address, const uint8_t *ip, size_t size);
+#endif
 
 /** Attempts to resolve the host named by the parameter hostName and sets
     the host field in the address parameter if successful.

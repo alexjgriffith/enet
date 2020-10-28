@@ -24,6 +24,10 @@ else()
         add_definitions(-Wno-error)
 endif()
 
+if(STUB)
+  add_definitions(-D_STUB)
+endif()
+
 if(HAS_FCNTL)
     add_definitions(-DHAS_FCNTL=1)
 endif()
@@ -79,7 +83,6 @@ set(SOURCE_FILES
     packet.c
     peer.c
     protocol.c
-    stub.c
     unix.c
     win32.c)
 
