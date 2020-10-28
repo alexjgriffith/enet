@@ -1,0 +1,8 @@
+build
+compile_commands.json
+*.o
+*.sa
+*.a
+*.~
+notes.org
+.clangd

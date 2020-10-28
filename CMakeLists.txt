@@ -19,9 +19,9 @@ set(CMAKE_EXTRA_INCLUDE_FILES "sys/types.h" "sys/socket.h")
 check_type_size("socklen_t" HAS_SOCKLEN_T BUILTIN_TYPES_ONLY)
 unset(CMAKE_EXTRA_INCLUDE_FILES)
 if(MSVC)
-	add_definitions(-W3)
+        add_definitions(-W3)
 else()
-	add_definitions(-Wno-error)
+        add_definitions(-Wno-error)
 endif()
 
 if(HAS_FCNTL)
@@ -68,6 +68,7 @@ set(INCLUDE_FILES
     ${INCLUDE_FILES_PREFIX}/unix.h
     ${INCLUDE_FILES_PREFIX}/utility.h
     ${INCLUDE_FILES_PREFIX}/win32.h
+    ${INCLUDE_FILES_PREFIX}/stub.h
 )
 
 set(SOURCE_FILES
@@ -78,6 +79,7 @@ set(SOURCE_FILES
     packet.c
     peer.c
     protocol.c
+    stub.c
     unix.c
     win32.c)
 
