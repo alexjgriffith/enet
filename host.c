@@ -87,7 +87,7 @@ enet_host_create (const ENetAddress * address, size_t peerCount, size_t channelL
     host -> commandCount = 0;
     host -> bufferCount = 0;
     host -> checksum = NULL;
-#ifndef _STUB
+#ifndef _IPV6
     host -> receivedAddress.host = ENET_HOST_ANY;
 #else
     memset(host -> receivedAddress.host, 0, 16);

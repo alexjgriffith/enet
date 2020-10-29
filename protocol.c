@@ -1029,7 +1029,7 @@ enet_protocol_handle_incoming_commands (ENetHost * host, ENetEvent * event)
     {
        peer = & host -> peers [peerID];
 
-#ifndef _STUB
+#ifndef _IPV6
        if (peer -> state == ENET_PEER_STATE_DISCONNECTED ||
            peer -> state == ENET_PEER_STATE_ZOMBIE ||
            ((host -> receivedAddress.host != peer -> address.host ||
@@ -1084,10 +1084,10 @@ enet_protocol_handle_incoming_commands (ENetHost * host, ENetEvent * event)
 
     if (peer != NULL)
     {
-#ifndef _STUB
+#ifndef _IPV6
        peer -> address.host = host -> receivedAddress.host;
  #else
-       enet_address_set_ip(&(peer -> address), host -> receivedAddress.host, 16);
+       enet_address_set_host_ip(&(peer -> address), host -> receivedAddress.host, 16);
 #endif
        peer -> address.port = host -> receivedAddress.port;
        peer -> incomingDataTotal += host -> receivedDataLength;

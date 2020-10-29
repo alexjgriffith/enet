@@ -38,6 +38,11 @@ typedef struct
 
 typedef void ENetSocketSet;
 
-#define enet_host_equal(host_a, host_b) (memcmp(&host_a, &host_b,16) == 0)
+// #define enet_host_equal(host_a, host_b) (memcmp(&host_a, &host_b, 16) == 0)
+
+#define ENET_SOCKETSET_EMPTY(sockset)          FD_ZERO (& (sockset))
+#define ENET_SOCKETSET_ADD(sockset, socket)    FD_SET (socket, & (sockset))
+#define ENET_SOCKETSET_REMOVE(sockset, socket) FD_CLR (socket, & (sockset))
+#define ENET_SOCKETSET_CHECK(sockset, socket)  FD_ISSET (socket, & (sockset))
 
 #endif /* __ENET_STUB_H__ */

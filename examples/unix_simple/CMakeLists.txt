@@ -1,8 +1,8 @@
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 3.0)
+project(enet-unix-simple)
 
-project(enet)
+set(ENET_STUB On)
 
-# The "configure" step.
 include(CheckFunctionExists)
 include(CheckStructHasMember)
 include(CheckTypeSize)
@@ -62,41 +62,14 @@ if(HAS_SOCKLEN_T)
     add_definitions(-DHAS_SOCKLEN_T=1)
 endif()
 
-include_directories(${PROJECT_SOURCE_DIR}/include)
+add_subdirectory(../../ enet)
 
-set(INCLUDE_FILES_PREFIX include/enet)
-set(INCLUDE_FILES
-    ${INCLUDE_FILES_PREFIX}/callbacks.h
-    ${INCLUDE_FILES_PREFIX}/enet.h
-    ${INCLUDE_FILES_PREFIX}/list.h
-    ${INCLUDE_FILES_PREFIX}/protocol.h
-    ${INCLUDE_FILES_PREFIX}/time.h
-    ${INCLUDE_FILES_PREFIX}/types.h
-    ${INCLUDE_FILES_PREFIX}/unix.h
-    ${INCLUDE_FILES_PREFIX}/utility.h
-    ${INCLUDE_FILES_PREFIX}/win32.h
-    ${INCLUDE_FILES_PREFIX}/stub.h
-)
+include_directories(include ../../include)
 
-set(SOURCE_FILES
-    callbacks.c
-    compress.c
-    host.c
-    list.c
-    packet.c
-    peer.c
-    protocol.c
-    unix.c
-    win32.c)
+add_library(enet_unix_simple STATIC unix.c)
 
-source_group(include FILES ${INCLUDE_FILES})
-source_group(source FILES ${SOURCE_FILES})
+target_link_libraries(enet_unix_simple enet)
 
-add_library(enet STATIC
-    ${INCLUDE_FILES}
-    ${SOURCE_FILES}
-)
 
-if (MINGW)
-    target_link_libraries(enet winmm ws2_32)
-endif()
+add_executable(test test.c)
+target_link_libraries(test enet_unix_simple)
